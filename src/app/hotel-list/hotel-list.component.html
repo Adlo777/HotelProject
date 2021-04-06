@@ -1,0 +1,43 @@
+<div class="container mb-5 mt-5">
+    <h2 class="d-flex justify-content-center"> {{title}}</h2>
+</div>
+<div class="card card-inverse card-danger text-center m-5 bg-danger pt-2 text-white">
+    <div class="card-block align-items-center">
+        <blockquote class="card-blockquote">
+            <p>Alerte Covid ! Les voyages sont soumis à une limitation de déplacement dans toute l'étendue du territoire!</p>
+        </blockquote>
+    </div>
+</div>
+<button class="btn btn-primary mx-5 mb-2 align-items-center" (click)="toggleshowBadge()"> 
+    <span class='material-icons'>
+        {{showBadge ? 'visibility_off' : 'visibility'}}
+    </span>
+    <span class="ml-2" style="position:relative; top:-5.5px" > {{showBadge ? 'Cacher' : 'afficher' }} </span> </button>
+<!--Si la condition est vrai afficher 'Cacher' sinon afficher 'afficher-->
+
+<hr>
+<div class="my-2 d-flex justify-content-center">
+    <div class="row">
+        <div class="col-md-4">
+            <span class="filter"> Filtre Actuel: <b> {{hotelFilter}}</b></span>
+
+        </div>
+        <div class="col-md-8 form-group">
+            <!--input type="text" class="form-control" [ngModel]="hotelFilter" (ngModelChange)="hotelFilter=$event "-->
+            <input type="text" class="form-control" [(ngModel)]="hotelFilter">
+        </div>
+    </div>
+</div>
+<div class="card-group mx-5 ">
+    <div class="card mx-1 " *ngFor="let hotel of hotels ">
+        <img class="card-img-top rounded " [src]="hotel.imageUrl " [alt]="hotel.hotelName " [title]="hotel.hotelName | uppercase ">
+        <div class="card-block ">
+            <h4 class="card-title ">{{hotel.hotelName}}</h4>
+            <p class="card-text ">{{hotel.description}}</p>
+            <div class="badge badge-warning">
+                {{hotel.price | currency : 'EUR' : 'symbol' : '1.2-2' : 'fr'}}
+            </div>
+            <span class="badge badge-primary mb-2 " *ngIf="showBadge">Nouveau</span>
+
+        </div>
+    </div>
