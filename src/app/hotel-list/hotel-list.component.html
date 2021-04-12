@@ -29,15 +29,15 @@
     </div>
 </div>
 <div class="card-group mx-5 ">
-    <div class="card mx-1 " *ngFor="let hotel of hotels ">
-        <img class="card-img-top rounded " [src]="hotel.imageUrl " [alt]="hotel.hotelName " [title]="hotel.hotelName | uppercase ">
+    <div class="card mx-1 " *ngFor="let hotel of hotelFiltered ">
+        <img class="card-img-top rounded " [src]="hotel.imageUrl " [alt]="hotel.hotelName | titlecase " [title]="hotel.hotelName | uppercase ">
         <div class="card-block ">
             <h4 class="card-title ">{{hotel.hotelName}}</h4>
             <p class="card-text ">{{hotel.description}}</p>
             <div class="badge badge-warning">
-                {{hotel.price | currency : 'EUR' : 'symbol' : '1.2-2' : 'fr'}}
+                {{hotel.price | currency : 'EUR' : 'symbol' : '1.2-2' : 'fr' |replaceComma }}
             </div>
             <span class="badge badge-primary mb-2 " *ngIf="showBadge">Nouveau</span>
-
+            <app-star-rating [rating]='hotel.rating'></app-star-rating>
         </div>
     </div>

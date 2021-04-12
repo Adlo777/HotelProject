@@ -11,16 +11,44 @@ export class HotelListComponent implements OnInit {
   public showBadge : boolean = false;
   public realnom : boolean = false;
 
-  public hotelFilter = 'mot';
+  private _hotelfilter : string = 'mot';
+
+  public hotelFiltered : IHotel[] = [];
+
+  public get hotelFilter() : string
+  {
+    return this._hotelfilter;
+
+  }
+
+  public set hotelFilter(criteria : string) 
+  {
+    this._hotelfilter = criteria;
+    this.hotelFiltered = this.hotelFilter ? this.FilteredHotels(this._hotelfilter) : this.hotels;
+
+  }
+
+  public FilteredHotels(criteria:string):IHotel[]
+  {
+    criteria = criteria.toLocaleLowerCase();
+    const res = this.hotels.filter((hotel:IHotel) => hotel.hotelName.toLocaleLowerCase().indexOf(criteria)!==-1);
+    return res;
+  }
+
+
+
 
   public toggleshowBadge() : void{
-    
+    this.showBadge = !this.showBadge;
   }
 
 
 
 
   public title : string = 'Hotel List';
+
+ 
+
   public hotels : IHotel[] = [
     {
       "hotelId": 1,
@@ -61,7 +89,9 @@ export class HotelListComponent implements OnInit {
   ]
 
  
-  
+  public hotelstatus : boolean[] = this.hotels.map(hotel => hotel.status);
+
+
 
   
   constructor() {
@@ -69,7 +99,9 @@ export class HotelListComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    console.log(typeof this.hotels);
+    this.hotelFiltered= this.hotels;
+    this._hotelfilter = ''
+    
   }
 
 }
